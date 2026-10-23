@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cidade Atenta · Denúncias urbanas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio"><span class="brand-mark" aria-hidden="true">CA</span>Cidade Atenta</a>
+      <nav aria-label="Principal">
+        <ul class="nav-list">
+          <li><a href="#inicio" data-rota="inicio">Início</a></li>
+          <li><a href="#registrar" data-rota="registrar">Registrar</a></li>
+          <li><a href="#acompanhar" data-rota="acompanhar">Acompanhar</a></li>
+          <li><a href="#demo" data-rota="demo">Demonstração</a></li>
+        </ul>
+      </nav>
+      <div class="a11y" role="group" aria-label="Opções de acessibilidade">
+        <button type="button" class="chip" id="fonte-menos" aria-label="Diminuir o tamanho do texto">A−</button>
+        <button type="button" class="chip" id="fonte-mais" aria-label="Aumentar o tamanho do texto">A+</button>
+        <button type="button" class="chip" id="contraste" aria-pressed="false">Alto contraste</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1">
+    <!-- INÍCIO -->
+    <section class="view" id="inicio" aria-labelledby="t-inicio">
+      <div class="container">
+        <div class="hero">
+          <p class="eyebrow">Plataforma de denúncias urbanas</p>
+          <h1 id="t-inicio">Viu um problema na sua cidade? Registre e acompanhe.</h1>
+          <p class="lead">Buracos, falta de iluminação, vazamentos e lixo acumulado podem ser comunicados em poucos minutos. Ao final, você recebe um protocolo para consultar o andamento quando quiser.</p>
+          <div class="acoes-inicio">
+            <a class="btn btn-primary" href="#registrar">Registrar ocorrência</a>
+            <a class="btn btn-ghost" href="#acompanhar">Já tenho um protocolo</a>
+          </div>
+        </div>
+        <ol class="passos">
+          <li class="card"><span class="step">1</span><h2>Escolha o problema</h2><p>Selecione a categoria que melhor descreve a situação.</p></li>
+          <li class="card"><span class="step">2</span><h2>Localize e descreva</h2><p>Informe a rua, o bairro e os detalhes que ajudam a equipe.</p></li>
+          <li class="card"><span class="step">3</span><h2>Acompanhe</h2><p>Use o protocolo recebido para ver o status em cada etapa.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- REGISTRO -->
+    <section class="view" id="registrar" aria-labelledby="t-registrar" hidden>
+      <div class="container narrow">
+        <h1 id="t-registrar">Registrar ocorrência</h1>
+        <p class="lead">Campos com * são obrigatórios. Você revisa tudo antes de enviar.</p>
+        <p class="erro-geral" id="aviso-form" role="alert"></p>
+
+        <form id="form-ocorrencia" novalidate>
+          <fieldset class="card">
+            <legend><span class="step">1</span>Tipo de ocorrência *</legend>
+            <div class="cat-grid" id="categorias"></div>
+            <p class="erro" id="erro-categoria"></p>
+          </fieldset>
+
+          <fieldset class="card">
+            <legend><span class="step">2</span>Localização</legend>
+            <div class="grid-2">
+              <div class="campo">
+                <label for="rua">Rua ou avenida *</label>
+                <input id="rua" type="text" autocomplete="off" aria-describedby="erro-rua">
+                <p class="erro" id="erro-rua"></p>
+              </div>
+              <div class="campo">
+                <label for="bairro">Bairro *</label>
+                <input id="bairro" type="text" autocomplete="off" aria-describedby="erro-bairro">
+                <p class="erro" id="erro-bairro"></p>
+              </div>
+              <div class="campo">
+                <label for="numero">Número ou local <span class="opc">(opcional)</span></label>
+                <input id="numero" type="text" autocomplete="off">
+              </div>
+              <div class="campo">
+                <label for="referencia">Ponto de referência <span class="opc">(opcional)</span></label>
+                <input id="referencia" type="text" placeholder="Ex.: em frente à padaria">
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="card">
+            <legend><span class="step">3</span>Descrição *</legend>
+            <div class="campo">
+              <label for="descricao">Detalhe o problema</label>
+              <p class="ajuda" id="ajuda-descricao">Informe o que acontece, desde quando, o local exato e se há risco para pedestres, veículos ou moradores.</p>
+              <textarea id="descricao" rows="5" aria-describedby="ajuda-descricao contador erro-descricao"></textarea>
+              <p class="contador" id="contador"></p>
+              <p class="erro" id="erro-descricao"></p>
+            </div>
+          </fieldset>
+
+          <fieldset class="card">
+            <legend><span class="step">4</span>Anexos <span class="opc">(opcional)</span></legend>
+            <div class="campo">
+              <label for="anexos">Imagens ou vídeos</label>
+              <p class="ajuda" id="ajuda-anexos">Até 5 arquivos. Imagens JPG, PNG ou WEBP até 5 MB. Vídeos MP4 ou WEBM até 20 MB.</p>
+              <input id="anexos" type="file" multiple accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" aria-describedby="ajuda-anexos erro-anexos">
+              <p class="erro" id="erro-anexos"></p>
+            </div>
+            <ul class="previas" id="previas" aria-label="Arquivos selecionados"></ul>
+          </fieldset>
+
+          <fieldset class="card">
+            <legend><span class="step">5</span>Identificação</legend>
+            <label class="switch">
+              <input id="anonimo" type="checkbox" role="switch" aria-describedby="ajuda-anonimo">
+              Registrar de forma anônima
+            </label>
+            <div class="comparativo" id="ajuda-anonimo">
+              <p><strong>Anônima:</strong> não exige dados pessoais. Você recebe o protocolo, mas a equipe não pode pedir esclarecimentos diretamente a você.</p>
+              <p><strong>Identificada:</strong> informa nome e e-mail, para que a equipe possa entrar em contato se precisar de mais detalhes.</p>
+            </div>
+            <div class="grid-2" id="bloco-identidade">
+              <div class="campo">
+                <label for="nome">Nome completo *</label>
+                <input id="nome" type="text" autocomplete="name" aria-describedby="erro-nome">
+                <p class="erro" id="erro-nome"></p>
+              </div>
+              <div class="campo">
+                <label for="email">E-mail *</label>
+                <input id="email" type="email" autocomplete="email" aria-describedby="erro-email">
+                <p class="erro" id="erro-email"></p>
+              </div>
+              <div class="campo">
+                <label for="telefone">Telefone <span class="opc">(opcional)</span></label>
+                <input id="telefone" type="tel" autocomplete="tel" placeholder="(11) 91234-5678" aria-describedby="erro-telefone">
+                <p class="erro" id="erro-telefone"></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="acoes">
+            <button type="reset" class="btn btn-ghost">Limpar campos</button>
+            <button type="submit" class="btn btn-primary">Revisar e enviar</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ACOMPANHAMENTO -->
+    <section class="view" id="acompanhar" aria-labelledby="t-acompanhar" hidden>
+      <div class="container narrow">
+        <h1 id="t-acompanhar">Acompanhar ocorrência</h1>
+        <p class="lead">Informe o protocolo recebido no registro. A consulta é somente leitura: após o envio, a ocorrência não pode ser editada nem excluída.</p>
+        <form class="card" id="form-consulta" novalidate>
+          <div class="campo">
+            <label for="protocolo">Número do protocolo</label>
+            <div class="linha">
+              <input id="protocolo" type="text" autocomplete="off" placeholder="CA-2026-XXXXXX" aria-describedby="ajuda-protocolo erro-protocolo">
+              <button class="btn btn-primary" type="submit">Consultar</button>
+            </div>
+            <p class="ajuda" id="ajuda-protocolo">Quer testar? <button type="button" class="link" data-exemplo="CA-2026-M4XP9D">Usar um protocolo de exemplo</button></p>
+            <p class="erro" id="erro-protocolo"></p>
+          </div>
+        </form>
+        <div id="resultado"></div>
+      </div>
+    </section>
+
+    <!-- DEMONSTRAÇÃO -->
+    <section class="view" id="demo" aria-labelledby="t-demo" hidden>
+      <div class="container">
+        <h1 id="t-demo">Painel de demonstração</h1>
+        <p class="aviso"><strong>Área demonstrativa.</strong> Os status alterados aqui simulam o trabalho de uma equipe pública e não fazem parte da experiência do cidadão. Os dados são fictícios.</p>
+        <div class="linha barra">
+          <label for="filtro">Filtrar por status</label>
+          <select id="filtro">
+            <option value="">Todos</option>
+            <option value="pendente">Pendente</option>
+            <option value="atendimento">Em atendimento</option>
+            <option value="resolvido">Resolvido</option>
+          </select>
+          <button type="button" class="btn btn-ghost" id="restaurar">Restaurar exemplos</button>
+        </div>
+        <p class="feedback" id="aviso-demo" role="status"></p>
+        <div class="tabela-wrap">
+          <table>
+            <caption>Ocorrências registradas neste navegador</caption>
+            <thead>
+              <tr>
+                <th scope="col">Protocolo</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Bairro</th>
+                <th scope="col">Data</th>
+                <th scope="col">Status</th>
+                <th scope="col">Simular status</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-demo"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>Projeto acadêmico de demonstração.</strong> Os dados são fictícios e ficam salvos apenas neste navegador (localStorage). Nenhuma denúncia é enviada a órgãos públicos, e este protótipo não substitui um sistema seguro de produção no servidor.</p>
+    </div>
+  </footer>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-fundo" data-fechar></div>
+    <div class="modal-caixa" id="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" tabindex="-1">
+      <div id="modal-conteudo"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
